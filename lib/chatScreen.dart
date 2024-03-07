@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:google_ai/messageBox.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+import 'package:google_ai/messageBox.dart';
 
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({
+    super.key,
+    required this.googleApiKey,
+  });
+  final String googleApiKey;
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
@@ -16,11 +20,10 @@ bool isSender = false;
 final scrollController = ScrollController();
 
 class _ChatScreenState extends State<ChatScreen> {
-  String apiKey = 'AIzaSyBs3BrHifrjvHLly8CsRtJ-TcJpgkFasRc';
-
   // API Request
   void aiRequest(String input) async {
-    final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
+    final model =
+        GenerativeModel(model: 'gemini-pro', apiKey: widget.googleApiKey);
 
     final prompt = input;
     final content = [Content.text(prompt)];
